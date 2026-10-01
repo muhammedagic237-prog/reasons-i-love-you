@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#fff1f2">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Forever Us">
+  <meta name="description" content="A romantic love card deck, us timer counter, and scratch-off love coupons for your soulmate.">
+  <title>Reasons I Love You &bull; Forever Us</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient floating particles background -->
+  <canvas id="bg-canvas"></canvas>
+  <canvas id="confetti-canvas"></canvas>
+
+  <div class="app-container">
+    <!-- App Header -->
+    <header class="app-header">
+      <div class="header-title-wrap">
+        <div class="header-icon">💝</div>
+        <div class="header-text">
+          <h1 id="header-partner-title">For My Love</h1>
+          <p id="header-today-date">Together Always</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" id="btn-open-favs" title="Favorites Vault" aria-label="Favorites Vault" style="position: relative;">
+          <span>💖</span>
+          <span class="badge-counter" id="fav-count-badge">0</span>
+        </button>
+        <button class="icon-btn" id="btn-open-settings" title="Settings" aria-label="Settings">
+          <span>⚙️</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Tabs Content -->
+    <main class="app-content">
+
+      <!-- ==========================================
+           TAB 1: THE "US" COUNTER
+           ========================================== -->
+      <section id="tab-counter" class="tab-pane active">
+        <div class="counter-hero">
+          <h2 class="couple-names" id="couple-names-display">You & Me</h2>
+          <div class="counter-subtitle">
+            <span class="pulse-dot"></span>
+            <span>Falling in love every single second</span>
+          </div>
+        </div>
+
+        <!-- 6-Unit Precision Timer Grid -->
+        <div class="timer-grid">
+          <div class="timer-box">
+            <div class="timer-num" id="time-years">00</div>
+            <div class="timer-label">Years</div>
+          </div>
+          <div class="timer-box">
+            <div class="timer-num" id="time-months">00</div>
+            <div class="timer-label">Months</div>
+          </div>
+          <div class="timer-box">
+            <div class="timer-num" id="time-days">00</div>
+            <div class="timer-label">Days</div>
+          </div>
+          <div class="timer-box">
+            <div class="timer-num" id="time-hours">00</div>
+            <div class="timer-label">Hours</div>
+          </div>
+          <div class="timer-box">
+            <div class="timer-num" id="time-minutes">00</div>
+            <div class="timer-label">Minutes</div>
+          </div>
+          <div class="timer-box">
+            <div class="timer-num" id="time-seconds">00</div>
+            <div class="timer-label">Seconds</div>
+          </div>
+        </div>
+
+        <!-- Milestone Card -->
+        <div class="milestone-card">
+          <div class="milestone-icon">🏆</div>
+          <div class="milestone-content">
+            <h3 id="milestone-title">Love Milestone</h3>
+            <p id="milestone-desc">Calculating our next beautiful milestone together...</p>
+          </div>
+        </div>
+
+        <!-- Quick Romantic Action Prompts -->
+        <div class="quick-prompts">
+          <div class="prompt-btn" id="quick-go-deck">
+            <div class="prompt-icon-badge">🎴</div>
+            <div class="prompt-text">
+              <h4>Reasons I Love You</h4>
+              <p>Swipe through 365 memories & reasons why you are the one</p>
+            </div>
+            <div class="prompt-arrow">&rsaquo;</div>
+          </div>
+
+          <div class="prompt-btn" id="quick-go-coupons">
+            <div class="prompt-icon-badge">🎟️</div>
+            <div class="prompt-text">
+              <h4>Scratch-Off Love Coupons</h4>
+              <p>Claim digital passes for massages, dishes, movies & hugs</p>
+            </div>
+            <div class="prompt-arrow">&rsaquo;</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           TAB 2: "REASONS I LOVE YOU" CARD DECK
+           ========================================== -->
+      <section id="tab-deck" class="tab-pane">
+        <!-- Deck Settings & Progress -->
+        <div class="deck-top-bar">
+          <div class="pill-select-group" id="deck-size-pills">
+            <button class="pill-opt" data-size="50">50</button>
+            <button class="pill-opt" data-size="100">100</button>
+            <button class="pill-opt active" data-size="365">365</button>
+          </div>
+          <div class="card-counter-tag" id="card-counter-display">
+            <span>Card 1 of 365</span>
+          </div>
+        </div>
+
+        <!-- Category Filter Chips -->
+        <div class="category-filter-bar" id="category-filter-chips">
+          <button class="cat-chip active" data-cat="all">All ✨</button>
+          <button class="cat-chip" data-cat="love">❤️ Deep Love</button>
+          <button class="cat-chip" data-cat="memory">📸 Memories</button>
+          <button class="cat-chip" data-cat="compliment">💫 Compliments</button>
+          <button class="cat-chip" data-cat="quirk">✨ Quirks</button>
+          <button class="cat-chip" data-cat="future">🔮 Future Dreams</button>
+          <button class="cat-chip" data-cat="joke">😂 Chuckles</button>
+        </div>
+
+        <!-- Card Arena -->
+        <div class="deck-arena" id="deck-arena">
+          <!-- Cards are dynamically injected and managed by app.js -->
+
+          <!-- Empty deck notification -->
+          <div class="deck-empty-state" id="deck-empty">
+            <div class="empty-icon">💖</div>
+            <h3>Deck Completed!</h3>
+            <p>You've swiped through all these reasons. Remember, I love you more than all words combined!</p>
+            <button class="btn-restart" id="btn-restart-deck">
+              <span>↺</span> Start Over
+            </button>
+          </div>
+        </div>
+
+        <!-- Tinder Swipe Controls -->
+        <div class="deck-controls">
+          <button class="control-btn btn-sm" id="btn-undo" title="Rewind / Undo" aria-label="Undo">
+            <span>↩️</span>
+          </button>
+          <button class="control-btn btn-lg btn-nope" id="btn-swipe-left" title="Pass / Next" aria-label="Next">
+            <span>✕</span>
+          </button>
+          <button class="control-btn btn-lg btn-like" id="btn-swipe-right" title="Save to Favorites" aria-label="Favorite">
+            <span>❤️</span>
+          </button>
+          <button class="control-btn btn-sm" id="btn-shuffle" title="Shuffle Deck" aria-label="Shuffle">
+            <span>🔀</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           TAB 3: "LOVE COUPONS" (SCRATCH-OFF)
+           ========================================== -->
+      <section id="tab-coupons" class="tab-pane">
+        <div class="coupons-header">
+          <div>
+            <h2 style="font-size: 18px; font-weight: 800; color: #881337;">Love Coupons</h2>
+            <p style="font-size: 12px; color: var(--text-muted);">Scratch with your finger to reveal your prize!</p>
+          </div>
+          <div class="coupons-stats-badge" id="coupons-stats">
+            0 / 14 Claimed
+          </div>
+        </div>
+
+        <!-- Filter bar for coupons -->
+        <div class="category-filter-bar" id="coupon-filter-bar" style="margin-bottom: 16px;">
+          <button class="cat-chip active" data-cfilter="all">All Coupons</button>
+          <button class="cat-chip" data-cfilter="available">Unclaimed 🎁</button>
+          <button class="cat-chip" data-cfilter="claimed">Redeemed ✔️</button>
+        </div>
+
+        <!-- List of interactive scratch tickets -->
+        <div class="coupons-list" id="coupons-container">
+          <!-- Dynamically populated by app.js -->
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation Dock -->
+    <nav class="bottom-nav">
+      <button class="nav-tab-btn active" data-tab="tab-counter">
+        <span class="nav-icon">⏳</span>
+        <span class="nav-label">Us Counter</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-deck">
+        <span class="nav-icon">🎴</span>
+        <span class="nav-label">Reasons</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-coupons">
+        <span class="nav-icon">🎟️</span>
+        <span class="nav-label">Coupons</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Favorites Vault Drawer / Modal -->
+  <div class="modal-overlay" id="modal-favorites">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 class="sheet-title">💖 Favorites Vault</h3>
+        <button class="sheet-close-btn" id="btn-close-favs">&times;</button>
+      </div>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+        Every reason you hearted while swiping is saved here so you can read them anytime!
+      </p>
+      <div class="favorites-list" id="favorites-list-container">
+        <!-- Rendered by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="modal-settings">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 class="sheet-title">⚙️ Personalize Us</h3>
+        <button class="sheet-close-btn" id="btn-close-settings">&times;</button>
+      </div>
+
+      <form id="settings-form">
+        <div class="settings-group">
+          <label class="settings-label" for="input-partner-name">Her Name / Pet Name</label>
+          <input type="text" class="settings-input" id="input-partner-name" placeholder="e.g. Maya, My Love" required>
+        </div>
+
+        <div class="settings-group">
+          <label class="settings-label" for="input-your-name">Your Name</label>
+          <input type="text" class="settings-input" id="input-your-name" placeholder="e.g. Alex" required>
+        </div>
+
+        <div class="settings-group">
+          <label class="settings-label" for="input-anniversary-date">Anniversary Start Date & Time</label>
+          <input type="datetime-local" class="settings-input" id="input-anniversary-date" required>
+        </div>
+
+        <div class="settings-group">
+          <label class="settings-label" for="input-sound-toggle">
+            <input type="checkbox" id="input-sound-toggle" checked style="margin-right: 8px;">
+            Enable Gentle Sound Chimes & Effects
+          </label>
+        </div>
+
+        <button type="submit" class="settings-btn-save">Save & Apply</button>
+        <button type="button" class="settings-btn-secondary" id="btn-reset-data">Reset Saved Progress</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Application Logic & Data -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

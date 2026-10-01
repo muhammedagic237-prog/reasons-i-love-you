@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff1f2" />
+      <stop offset="50%" stop-color="#ffe4e6" />
+      <stop offset="100%" stop-color="#fce7f3" />
+    </linearGradient>
+    <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fb7185" />
+      <stop offset="40%" stop-color="#e11d48" />
+      <stop offset="100%" stop-color="#be123c" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#e11d48" flood-opacity="0.35" />
+    </filter>
+    <linearGradient id="goldStar" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Squircle -->
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)" />
+  <rect width="504" height="504" x="4" y="4" rx="124" fill="none" stroke="#f472b6" stroke-width="4" stroke-opacity="0.3" />
+
+  <!-- Main Romantic Glowing Heart -->
+  <path d="M256,416 C256,416 112,324 72,238 C32,152 74,96 148,96 C196,96 236,128 256,160 C276,128 316,96 364,96 C438,96 480,152 440,238 C400,324 256,416 256,416 Z" 
+        fill="url(#heartGrad)" 
+        filter="url(#glow)" />
+
+  <!-- Inner Heart Highlight Reflection -->
+  <path d="M148,116 C180,116 210,138 230,166 C210,146 178,132 148,132 C108,132 80,166 76,212 C74,180 88,140 120,124 C128,120 138,116 148,116 Z" 
+        fill="#ffffff" 
+        opacity="0.4" />
+
+  <!-- Gold Star Sparkles -->
+  <path d="M388,140 L394,158 L412,164 L394,170 L388,188 L382,170 L364,164 L382,158 Z" fill="url(#goldStar)" />
+  <path d="M120,320 L124,332 L136,336 L124,340 L120,352 L116,340 L104,336 L116,332 Z" fill="url(#goldStar)" opacity="0.85" />
+</svg>
