@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bs">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#fff1f2">
+  <meta name="theme-color" content="#0d0914">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Forever Us">
-  <meta name="description" content="A romantic love card deck, us timer counter, and scratch-off love coupons for your soulmate.">
-  <title>Reasons I Love You &bull; Forever Us</title>
+  <meta name="apple-mobile-web-app-title" content="Love1606">
+  <meta name="description" content="Love1606 • Amila & Muhammed. Naš ljubavni brojač, špil razloga zašto te volim i ljubavni kuponi.">
+  <title>Love1606 &bull; Amila &amp; Muhammed</title>
 
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -16,6 +16,10 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Ambient Custom Photo Background & Vignette Glass Overlay -->
+  <div class="app-bg-image" id="app-bg-image"></div>
+  <div class="app-bg-overlay"></div>
+
   <!-- Ambient floating particles background -->
   <canvas id="bg-canvas"></canvas>
   <canvas id="confetti-canvas"></canvas>
@@ -23,64 +27,71 @@
   <div class="app-container">
     <!-- App Header -->
     <header class="app-header">
-      <div class="header-title-wrap">
-        <div class="header-icon">💝</div>
-        <div class="header-text">
-          <h1 id="header-partner-title">For My Love</h1>
-          <p id="header-today-date">Together Always</p>
+      <div class="header-left-wrap">
+        <div class="header-avatar-btn" id="btn-open-photo" title="Pogledaj našu sliku">
+          <span class="header-avatar-heart">💖</span>
+        </div>
+        <div class="header-brand">
+          <h1>Love1606</h1>
+          <div class="discreet-couple-tag">
+            <span>Amila &amp; Muhammed</span>
+            <span>&bull;</span>
+            <span>16.06.2026</span>
+          </div>
         </div>
       </div>
       <div class="header-actions">
-        <button class="icon-btn" id="btn-open-favs" title="Favorites Vault" aria-label="Favorites Vault" style="position: relative;">
+        <button class="icon-btn" id="btn-open-favs" title="Sačuvani Razlozi" aria-label="Favorites Vault" style="position: relative;">
           <span>💖</span>
           <span class="badge-counter" id="fav-count-badge">0</span>
         </button>
-        <button class="icon-btn" id="btn-open-settings" title="Settings" aria-label="Settings">
+        <button class="icon-btn" id="btn-open-settings" title="Postavke" aria-label="Settings">
           <span>⚙️</span>
         </button>
       </div>
     </header>
 
-    <!-- Main Tabs Content -->
+    <!-- Main Content Area -->
     <main class="app-content">
 
       <!-- ==========================================
-           TAB 1: THE "US" COUNTER
+           TAB 1: THE "US" COUNTER (16.06.2026)
            ========================================== -->
       <section id="tab-counter" class="tab-pane active">
         <div class="counter-hero">
-          <h2 class="couple-names" id="couple-names-display">You & Me</h2>
-          <div class="counter-subtitle">
+          <div class="hero-photo-badge" id="btn-hero-photo">
+            <div class="hero-avatar-mini"></div>
+            <span class="hero-badge-text">Amila &amp; Muhammed &infin;</span>
+          </div>
+
+          <div class="hero-days-highlight">
+            <div class="hero-days-number" id="time-total-days">107</div>
+            <div class="hero-days-label">Dana Zajedno</div>
+          </div>
+
+          <div class="couple-names-discreet">
             <span class="pulse-dot"></span>
-            <span>Falling in love every single second</span>
+            <span>Volim te od 16.06.2026. svake sekunde</span>
           </div>
         </div>
 
-        <!-- 6-Unit Precision Timer Grid -->
-        <div class="timer-grid">
-          <div class="timer-box">
-            <div class="timer-num" id="time-years">00</div>
-            <div class="timer-label">Years</div>
-          </div>
-          <div class="timer-box">
-            <div class="timer-num" id="time-months">00</div>
-            <div class="timer-label">Months</div>
-          </div>
+        <!-- 4-Box Precision Live Timer Grid -->
+        <div class="timer-grid-4">
           <div class="timer-box">
             <div class="timer-num" id="time-days">00</div>
-            <div class="timer-label">Days</div>
+            <div class="timer-label">Dana</div>
           </div>
           <div class="timer-box">
             <div class="timer-num" id="time-hours">00</div>
-            <div class="timer-label">Hours</div>
+            <div class="timer-label">Sati</div>
           </div>
           <div class="timer-box">
             <div class="timer-num" id="time-minutes">00</div>
-            <div class="timer-label">Minutes</div>
+            <div class="timer-label">Minuta</div>
           </div>
           <div class="timer-box">
             <div class="timer-num" id="time-seconds">00</div>
-            <div class="timer-label">Seconds</div>
+            <div class="timer-label">Sekundi</div>
           </div>
         </div>
 
@@ -88,8 +99,8 @@
         <div class="milestone-card">
           <div class="milestone-icon">🏆</div>
           <div class="milestone-content">
-            <h3 id="milestone-title">Love Milestone</h3>
-            <p id="milestone-desc">Calculating our next beautiful milestone together...</p>
+            <h3 id="milestone-title">Naš Sljedeći Jubilej</h3>
+            <p id="milestone-desc">Brojimo dane do sljedećeg posebnog trenutka zajedno...</p>
           </div>
         </div>
 
@@ -98,8 +109,8 @@
           <div class="prompt-btn" id="quick-go-deck">
             <div class="prompt-icon-badge">🎴</div>
             <div class="prompt-text">
-              <h4>Reasons I Love You</h4>
-              <p>Swipe through 365 memories & reasons why you are the one</p>
+              <h4>Razlozi Zašto Te Volim</h4>
+              <p>Povuci kartice i otkrij poruke koje sam pripremio za tebe</p>
             </div>
             <div class="prompt-arrow">&rsaquo;</div>
           </div>
@@ -107,8 +118,8 @@
           <div class="prompt-btn" id="quick-go-coupons">
             <div class="prompt-icon-badge">🎟️</div>
             <div class="prompt-text">
-              <h4>Scratch-Off Love Coupons</h4>
-              <p>Claim digital passes for massages, dishes, movies & hugs</p>
+              <h4>Ljubavni Kuponi (Ogrebi)</h4>
+              <p>Ogrebi prstom digitalne kupone za masažu, večeru i poljupce</p>
             </div>
             <div class="prompt-arrow">&rsaquo;</div>
           </div>
@@ -127,48 +138,48 @@
             <button class="pill-opt active" data-size="365">365</button>
           </div>
           <div class="card-counter-tag" id="card-counter-display">
-            <span>Card 1 of 365</span>
+            <span>Kartica 1 od 365</span>
           </div>
         </div>
 
         <!-- Category Filter Chips -->
         <div class="category-filter-bar" id="category-filter-chips">
-          <button class="cat-chip active" data-cat="all">All ✨</button>
-          <button class="cat-chip" data-cat="love">❤️ Deep Love</button>
-          <button class="cat-chip" data-cat="memory">📸 Memories</button>
-          <button class="cat-chip" data-cat="compliment">💫 Compliments</button>
-          <button class="cat-chip" data-cat="quirk">✨ Quirks</button>
-          <button class="cat-chip" data-cat="future">🔮 Future Dreams</button>
-          <button class="cat-chip" data-cat="joke">😂 Chuckles</button>
+          <button class="cat-chip active" data-cat="all">Sve ✨</button>
+          <button class="cat-chip" data-cat="love">❤️ Ljubav</button>
+          <button class="cat-chip" data-cat="memory">📸 Uspomene</button>
+          <button class="cat-chip" data-cat="compliment">💫 Komplimenti</button>
+          <button class="cat-chip" data-cat="quirk">✨ Sitnice</button>
+          <button class="cat-chip" data-cat="future">🔮 Budućnost</button>
+          <button class="cat-chip" data-cat="joke">😂 Naše Šale</button>
         </div>
 
         <!-- Card Arena -->
         <div class="deck-arena" id="deck-arena">
-          <!-- Cards are dynamically injected and managed by app.js -->
+          <!-- Dynamically injected cards -->
 
-          <!-- Empty deck notification -->
+          <!-- Empty deck state -->
           <div class="deck-empty-state" id="deck-empty">
             <div class="empty-icon">💖</div>
-            <h3>Deck Completed!</h3>
-            <p>You've swiped through all these reasons. Remember, I love you more than all words combined!</p>
+            <h3>Sve Kartice Pregledane!</h3>
+            <p>Pregledala si sve kartice, ali zapamti: volim te više nego što ijedan broj može opisati!</p>
             <button class="btn-restart" id="btn-restart-deck">
-              <span>↺</span> Start Over
+              <span>↺</span> Kreni Iznova
             </button>
           </div>
         </div>
 
         <!-- Tinder Swipe Controls -->
         <div class="deck-controls">
-          <button class="control-btn btn-sm" id="btn-undo" title="Rewind / Undo" aria-label="Undo">
+          <button class="control-btn btn-sm" id="btn-undo" title="Vrati Nazad (Undo)" aria-label="Undo">
             <span>↩️</span>
           </button>
-          <button class="control-btn btn-lg btn-nope" id="btn-swipe-left" title="Pass / Next" aria-label="Next">
+          <button class="control-btn btn-lg btn-nope" id="btn-swipe-left" title="Dalje (Next)" aria-label="Next">
             <span>✕</span>
           </button>
-          <button class="control-btn btn-lg btn-like" id="btn-swipe-right" title="Save to Favorites" aria-label="Favorite">
+          <button class="control-btn btn-lg btn-like" id="btn-swipe-right" title="Volim Ovo / Sačuvaj" aria-label="Favorite">
             <span>❤️</span>
           </button>
-          <button class="control-btn btn-sm" id="btn-shuffle" title="Shuffle Deck" aria-label="Shuffle">
+          <button class="control-btn btn-sm" id="btn-shuffle" title="Izmiješaj Špil" aria-label="Shuffle">
             <span>🔀</span>
           </button>
         </div>
@@ -180,19 +191,19 @@
       <section id="tab-coupons" class="tab-pane">
         <div class="coupons-header">
           <div>
-            <h2 style="font-size: 18px; font-weight: 800; color: #881337;">Love Coupons</h2>
-            <p style="font-size: 12px; color: var(--text-muted);">Scratch with your finger to reveal your prize!</p>
+            <h2 style="font-size: 18px; font-weight: 800; color: #ffffff;">Ljubavni Kuponi</h2>
+            <p style="font-size: 12px; color: var(--text-muted);">Ogrebi prstom po kartici da otkriješ nagradu!</p>
           </div>
           <div class="coupons-stats-badge" id="coupons-stats">
-            0 / 14 Claimed
+            0 / 14 Iskorišteno
           </div>
         </div>
 
         <!-- Filter bar for coupons -->
-        <div class="category-filter-bar" id="coupon-filter-bar" style="margin-bottom: 16px;">
-          <button class="cat-chip active" data-cfilter="all">All Coupons</button>
-          <button class="cat-chip" data-cfilter="available">Unclaimed 🎁</button>
-          <button class="cat-chip" data-cfilter="claimed">Redeemed ✔️</button>
+        <div class="category-filter-bar" id="coupon-filter-bar" style="margin-bottom: 14px;">
+          <button class="cat-chip active" data-cfilter="all">Svi Kuponi</button>
+          <button class="cat-chip" data-cfilter="available">Dostupni 🎁</button>
+          <button class="cat-chip" data-cfilter="claimed">Iskorišteni ✔️</button>
         </div>
 
         <!-- List of interactive scratch tickets -->
@@ -207,17 +218,33 @@
     <nav class="bottom-nav">
       <button class="nav-tab-btn active" data-tab="tab-counter">
         <span class="nav-icon">⏳</span>
-        <span class="nav-label">Us Counter</span>
+        <span class="nav-label">Brojač</span>
       </button>
       <button class="nav-tab-btn" data-tab="tab-deck">
         <span class="nav-icon">🎴</span>
-        <span class="nav-label">Reasons</span>
+        <span class="nav-label">Razlozi</span>
       </button>
       <button class="nav-tab-btn" data-tab="tab-coupons">
         <span class="nav-icon">🎟️</span>
-        <span class="nav-label">Coupons</span>
+        <span class="nav-label">Kuponi</span>
       </button>
     </nav>
+  </div>
+
+  <!-- Photo Lightbox Modal -->
+  <div class="modal-overlay photo-lightbox-modal" id="modal-photo">
+    <div class="modal-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 class="sheet-title">💖 Naša Slika</h3>
+        <button class="sheet-close-btn" id="btn-close-photo">&times;</button>
+      </div>
+      <div class="lightbox-img-wrap">
+        <img src="bg.jpg" alt="Amila & Muhammed">
+      </div>
+      <h4 class="lightbox-caption">Amila &amp; Muhammed</h4>
+      <p class="lightbox-sub">Zajedno od 16.06.2026. &bull; Volim te najviše na svijetu!</p>
+    </div>
   </div>
 
   <!-- Favorites Vault Drawer / Modal -->
@@ -225,11 +252,11 @@
     <div class="modal-sheet">
       <div class="sheet-handle"></div>
       <div class="sheet-header">
-        <h3 class="sheet-title">💖 Favorites Vault</h3>
+        <h3 class="sheet-title">💖 Sačuvani Razlozi</h3>
         <button class="sheet-close-btn" id="btn-close-favs">&times;</button>
       </div>
       <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
-        Every reason you hearted while swiping is saved here so you can read them anytime!
+        Sve kartice koje si označila srcem dok si listala čuvaju se ovdje za tebe.
       </p>
       <div class="favorites-list" id="favorites-list-container">
         <!-- Rendered by app.js -->
@@ -242,35 +269,35 @@
     <div class="modal-sheet">
       <div class="sheet-handle"></div>
       <div class="sheet-header">
-        <h3 class="sheet-title">⚙️ Personalize Us</h3>
+        <h3 class="sheet-title">⚙️ Postavke Us</h3>
         <button class="sheet-close-btn" id="btn-close-settings">&times;</button>
       </div>
 
       <form id="settings-form">
         <div class="settings-group">
-          <label class="settings-label" for="input-partner-name">Her Name / Pet Name</label>
-          <input type="text" class="settings-input" id="input-partner-name" placeholder="e.g. Maya, My Love" required>
+          <label class="settings-label" for="input-partner-name">Njeno Ime</label>
+          <input type="text" class="settings-input" id="input-partner-name" value="Amila" required>
         </div>
 
         <div class="settings-group">
-          <label class="settings-label" for="input-your-name">Your Name</label>
-          <input type="text" class="settings-input" id="input-your-name" placeholder="e.g. Alex" required>
+          <label class="settings-label" for="input-your-name">Tvoje Ime</label>
+          <input type="text" class="settings-input" id="input-your-name" value="Muhammed" required>
         </div>
 
         <div class="settings-group">
-          <label class="settings-label" for="input-anniversary-date">Anniversary Start Date & Time</label>
+          <label class="settings-label" for="input-anniversary-date">Datum Godišnjice</label>
           <input type="datetime-local" class="settings-input" id="input-anniversary-date" required>
         </div>
 
         <div class="settings-group">
           <label class="settings-label" for="input-sound-toggle">
             <input type="checkbox" id="input-sound-toggle" checked style="margin-right: 8px;">
-            Enable Gentle Sound Chimes & Effects
+            Zvukovi i Romantični Efekti
           </label>
         </div>
 
-        <button type="submit" class="settings-btn-save">Save & Apply</button>
-        <button type="button" class="settings-btn-secondary" id="btn-reset-data">Reset Saved Progress</button>
+        <button type="submit" class="settings-btn-save">Sačuvaj Promjene</button>
+        <button type="button" class="settings-btn-secondary" id="btn-reset-data">Resetuj Pregledano</button>
       </form>
     </div>
   </div>

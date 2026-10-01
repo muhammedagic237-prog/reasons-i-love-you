@@ -1,23 +1,22 @@
 /**
- * "Forever Us" - Reasons I Love You, Us Counter & Love Coupons
- * Clean, lightweight, zero-dependency PWA engine
+ * Love1606 • Amila & Muhammed
+ * Luxury Romantic PWA Engine
  */
 
 (() => {
   'use strict';
 
-  // --- State & Storage Keys ---
   const STORAGE_KEYS = {
-    SETTINGS: 'forever_us_settings',
-    FAVORITES: 'forever_us_favorites',
-    COUPONS: 'forever_us_coupons',
-    DECK_PROGRESS: 'forever_us_deck_progress'
+    SETTINGS: 'love1606_settings',
+    FAVORITES: 'love1606_favorites',
+    COUPONS: 'love1606_coupons',
+    DECK_PROGRESS: 'love1606_deck_progress'
   };
 
   let state = {
     settings: { ...DEFAULT_SETTINGS },
     favorites: [],
-    couponsState: {}, // { [couponId]: { scratched: bool, claimed: bool, claimedAt: string } }
+    couponsState: {},
     currentDeckSize: 365,
     currentCategory: 'all',
     activeDeck: [],
@@ -51,49 +50,49 @@
 
         if (type === 'swipe') {
           osc.type = 'sine';
-          osc.frequency.setValueAtTime(320, now);
-          osc.frequency.exponentialRampToValueAtTime(180, now + 0.12);
+          osc.frequency.setValueAtTime(340, now);
+          osc.frequency.exponentialRampToValueAtTime(200, now + 0.12);
           gain.gain.setValueAtTime(0.08, now);
           gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
           osc.start(now);
           osc.stop(now + 0.12);
         } else if (type === 'heart') {
-          // Soft romantic chime
-          const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
-          notes.forEach((freq, idx) => {
-            const noteOsc = this.ctx.createOscillator();
-            const noteGain = this.ctx.createGain();
-            noteOsc.connect(noteGain);
-            noteGain.connect(this.ctx.destination);
-            noteOsc.type = 'triangle';
-            noteOsc.frequency.setValueAtTime(freq, now + idx * 0.05);
-            noteGain.gain.setValueAtTime(0.06, now + idx * 0.05);
-            noteGain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.05 + 0.35);
-            noteOsc.start(now + idx * 0.05);
-            noteOsc.stop(now + idx * 0.05 + 0.35);
+          // Romantic harp chord (C-E-G-C)
+          const chord = [523.25, 659.25, 783.99, 1046.50];
+          chord.forEach((freq, idx) => {
+            const o = this.ctx.createOscillator();
+            const g = this.ctx.createGain();
+            o.connect(g);
+            g.connect(this.ctx.destination);
+            o.type = 'triangle';
+            o.frequency.setValueAtTime(freq, now + idx * 0.05);
+            g.gain.setValueAtTime(0.06, now + idx * 0.05);
+            g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.05 + 0.4);
+            o.start(now + idx * 0.05);
+            o.stop(now + idx * 0.05 + 0.4);
           });
         } else if (type === 'claim') {
-          // Joyful bell
-          [440, 554.37, 659.25].forEach((freq, i) => {
+          // Joyful golden chime
+          [554.37, 659.25, 830.61].forEach((freq, i) => {
             const o = this.ctx.createOscillator();
             const g = this.ctx.createGain();
             o.connect(g);
             g.connect(this.ctx.destination);
             o.type = 'sine';
-            o.frequency.setValueAtTime(freq, now + i * 0.08);
-            g.gain.setValueAtTime(0.07, now + i * 0.08);
-            g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.4);
-            o.start(now + i * 0.08);
-            o.stop(now + i * 0.08 + 0.4);
+            o.frequency.setValueAtTime(freq, now + i * 0.07);
+            g.gain.setValueAtTime(0.07, now + i * 0.07);
+            g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.07 + 0.45);
+            o.start(now + i * 0.07);
+            o.stop(now + i * 0.07 + 0.45);
           });
         }
       } catch (e) {
-        console.warn('Audio not allowed yet', e);
+        console.warn('Audio not available yet', e);
       }
     }
   };
 
-  // --- Background & Confetti Particles Engine ---
+  // --- Particle Engine (Floating Hearts & Confetti) ---
   const ParticleEngine = {
     bgCanvas: document.getElementById('bg-canvas'),
     confettiCanvas: document.getElementById('confetti-canvas'),
@@ -108,15 +107,14 @@
       this.resize();
       window.addEventListener('resize', () => this.resize());
 
-      // Create ambient floating hearts
-      for (let i = 0; i < 18; i++) {
+      for (let i = 0; i < 20; i++) {
         this.hearts.push({
           x: Math.random() * window.innerWidth,
           y: Math.random() * window.innerHeight,
-          size: 10 + Math.random() * 14,
-          speedY: 0.3 + Math.random() * 0.6,
-          speedX: (Math.random() - 0.5) * 0.4,
-          opacity: 0.15 + Math.random() * 0.25,
+          size: 8 + Math.random() * 12,
+          speedY: 0.25 + Math.random() * 0.5,
+          speedX: (Math.random() - 0.5) * 0.3,
+          opacity: 0.2 + Math.random() * 0.35,
           angle: Math.random() * Math.PI * 2
         });
       }
@@ -150,7 +148,7 @@
     },
 
     burst(x, y) {
-      const colors = ['#f43f5e', '#ec4899', '#f59e0b', '#fb7185', '#fda4af', '#fcd34d'];
+      const colors = ['#f43f5e', '#fb7185', '#fda4af', '#fbbf24', '#ffffff', '#ec4899'];
       for (let i = 0; i < 35; i++) {
         const angle = Math.random() * Math.PI * 2;
         const velocity = 2.5 + Math.random() * 5.5;
@@ -171,7 +169,7 @@
     animate() {
       requestAnimationFrame(() => this.animate());
 
-      // 1. Draw ambient floating hearts
+      // 1. Ambient hearts
       this.bgCtx.clearRect(0, 0, this.bgCanvas.width, this.bgCanvas.height);
       const w = this.bgCanvas.width;
       const h = this.bgCanvas.height;
@@ -184,16 +182,16 @@
           p.y = h + 20;
           p.x = Math.random() * w;
         }
-        this.drawHeart(this.bgCtx, p.x, p.y, p.size, '#f43f5e', p.opacity);
+        this.drawHeart(this.bgCtx, p.x, p.y, p.size, '#fb7185', p.opacity);
       });
 
-      // 2. Draw confetti explosions
+      // 2. Confetti explosions
       this.confettiCtx.clearRect(0, 0, this.confettiCanvas.width, this.confettiCanvas.height);
       for (let i = this.confettis.length - 1; i >= 0; i--) {
         const c = this.confettis[i];
         c.x += c.vx;
         c.y += c.vy;
-        c.vy += 0.12; // gravity
+        c.vy += 0.12;
         c.alpha -= c.decay;
 
         if (c.alpha <= 0) {
@@ -218,7 +216,12 @@
   function loadPersistedState() {
     try {
       const savedSettings = localStorage.getItem(STORAGE_KEYS.SETTINGS);
-      if (savedSettings) state.settings = { ...DEFAULT_SETTINGS, ...JSON.parse(savedSettings) };
+      if (savedSettings) {
+        state.settings = { ...DEFAULT_SETTINGS, ...JSON.parse(savedSettings) };
+      } else {
+        // Enforce 16.06.2026 default
+        state.settings = { ...DEFAULT_SETTINGS };
+      }
 
       const savedFavs = localStorage.getItem(STORAGE_KEYS.FAVORITES);
       if (savedFavs) state.favorites = JSON.parse(savedFavs);
@@ -232,7 +235,7 @@
         if (typeof p.deckIndex === 'number') state.deckIndex = p.deckIndex;
       }
     } catch (e) {
-      console.error('Failed to load local storage:', e);
+      console.error('Failed to load state:', e);
     }
   }
 
@@ -243,11 +246,11 @@
       localStorage.setItem(STORAGE_KEYS.COUPONS, JSON.stringify(state.couponsState));
       localStorage.setItem(STORAGE_KEYS.DECK_PROGRESS, JSON.stringify({ deckIndex: state.deckIndex }));
     } catch (e) {
-      console.error('Failed to save local storage:', e);
+      console.error('Failed to save state:', e);
     }
   }
 
-  // --- Feature 1: The "Us" Counter ---
+  // --- Feature 1: The "Us" Counter (16.06.2026) ---
   const UsCounter = {
     intervalId: null,
 
@@ -258,12 +261,11 @@
     },
 
     updateDisplay() {
-      const startDate = new Date(state.settings.anniversaryDate);
+      const startDate = new Date(state.settings.anniversaryDate || '2026-06-16T00:00:00');
       const now = new Date();
       if (isNaN(startDate.getTime())) return;
 
       let diff = now.getTime() - startDate.getTime();
-      const isPast = diff >= 0;
       diff = Math.abs(diff);
 
       const totalSeconds = Math.floor(diff / 1000);
@@ -272,53 +274,32 @@
       const minutes = totalMinutes % 60;
       const totalHours = Math.floor(totalMinutes / 60);
       const hours = totalHours % 24;
-
-      // Accurate calendar year/month/day calculation
-      let years = now.getFullYear() - startDate.getFullYear();
-      let months = now.getMonth() - startDate.getMonth();
-      let days = now.getDate() - startDate.getDate();
-
-      if (days < 0) {
-        months -= 1;
-        const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
-        days += prevMonth.getDate();
-      }
-      if (months < 0) {
-        years -= 1;
-        months += 12;
-      }
-
-      if (years < 0) {
-        years = 0; months = 0; days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      }
+      const totalDays = Math.floor(totalHours / 24);
 
       const pad = (n) => String(Math.max(0, n)).padStart(2, '0');
 
-      const elYears = document.getElementById('time-years');
-      const elMonths = document.getElementById('time-months');
+      const elTotalDays = document.getElementById('time-total-days');
       const elDays = document.getElementById('time-days');
       const elHours = document.getElementById('time-hours');
       const elMinutes = document.getElementById('time-minutes');
       const elSeconds = document.getElementById('time-seconds');
 
-      if (elYears) elYears.textContent = pad(years);
-      if (elMonths) elMonths.textContent = pad(months);
-      if (elDays) elDays.textContent = pad(days);
+      if (elTotalDays) elTotalDays.textContent = totalDays;
+      if (elDays) elDays.textContent = pad(totalDays);
       if (elHours) elHours.textContent = pad(hours);
       if (elMinutes) elMinutes.textContent = pad(minutes);
       if (elSeconds) elSeconds.textContent = pad(seconds);
 
-      // Milestone calculation
-      const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const milestones = [100, 200, 300, 365, 500, 730, 1000, 1500, 1825, 2000, 2500, 3000];
-      const nextMilestone = milestones.find(m => m > totalDays) || (totalDays + 100);
+      // Milestones (100, 150, 200, 365, 500, 730, 1000...)
+      const milestones = [100, 150, 200, 300, 365, 500, 730, 1000, 1500, 2000];
+      const nextMilestone = milestones.find(m => m > totalDays) || (totalDays + 50);
       const daysToNext = nextMilestone - totalDays;
 
       const titleEl = document.getElementById('milestone-title');
       const descEl = document.getElementById('milestone-desc');
       if (titleEl && descEl) {
-        titleEl.textContent = `${nextMilestone} Days of Loving You`;
-        descEl.textContent = `Only ${daysToNext} day${daysToNext === 1 ? '' : 's'} until our next big milestone! (${totalDays} days together and counting).`;
+        titleEl.textContent = `${nextMilestone} Dana Naše Ljubavi`;
+        descEl.textContent = `Još ${daysToNext} dan${daysToNext === 1 ? '' : 'a'} do našeg jubilarnog trenutka (${totalDays} predivnih dana iza nas)!`;
       }
     }
   };
@@ -341,10 +322,8 @@
     },
 
     filterDeck() {
-      // 1. Slice by deck size (50, 100, or 365)
       let list = REASONS_DATABASE.slice(0, state.currentDeckSize);
 
-      // 2. Filter by category if not 'all'
       if (state.currentCategory !== 'all') {
         list = list.filter(item => item.category === state.currentCategory);
       }
@@ -357,7 +336,6 @@
     },
 
     render() {
-      // Clear existing cards
       const existing = this.arenaEl.querySelectorAll('.swipe-card');
       existing.forEach(card => card.remove());
 
@@ -365,14 +343,13 @@
 
       if (remaining.length === 0) {
         this.emptyEl.classList.add('active');
-        this.counterEl.textContent = `Completed (${state.activeDeck.length}/${state.activeDeck.length})`;
+        this.counterEl.textContent = `Završeno (${state.activeDeck.length}/${state.activeDeck.length})`;
         return;
       }
 
       this.emptyEl.classList.remove('active');
-      this.counterEl.textContent = `Card ${state.deckIndex + 1} of ${state.activeDeck.length}`;
+      this.counterEl.textContent = `Kartica ${state.deckIndex + 1} od ${state.activeDeck.length}`;
 
-      // Render top 3 cards in stack for 3D realism
       const cardsToRender = remaining.slice(0, 3);
       cardsToRender.reverse().forEach((item, index) => {
         const stackPos = cardsToRender.length - 1 - index;
@@ -391,11 +368,11 @@
       card.className = `swipe-card ${stackPos === 0 ? 'is-top' : stackPos === 1 ? 'is-second' : 'is-third'}`;
       card.dataset.id = item.id;
 
-      const meta = CATEGORY_META[item.category] || { label: 'Reason', icon: '❤️', color: '#e11d48', bg: '#ffe4e6' };
+      const meta = CATEGORY_META[item.category] || { label: 'Ljubav', icon: '❤️', color: '#e11d48', bg: '#ffe4e6' };
 
       card.innerHTML = `
-        <div class="card-stamp like">LOVE IT ❤️</div>
-        <div class="card-stamp nope">NEXT ✨</div>
+        <div class="card-stamp like">VOLIM TE ❤️</div>
+        <div class="card-stamp nope">DALJE ✨</div>
 
         <div class="card-header-row">
           <span class="card-category-badge" style="color: ${meta.color}; background: ${meta.bg}">
@@ -414,6 +391,8 @@
             <p class="card-note-text">💭 ${item.note}</p>
           </div>
         ` : ''}
+
+        <div class="card-watermark">Amila &amp; Muhammed &bull; Love1606</div>
       `;
 
       return card;
@@ -440,11 +419,10 @@
 
         const deltaX = this.currentX - this.startX;
         const deltaY = this.currentY - this.startY;
-        const rotate = deltaX * 0.07;
+        const rotate = deltaX * 0.08;
 
         card.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${rotate}deg)`;
 
-        // Stamp opacity
         const likeStamp = card.querySelector('.card-stamp.like');
         const nopeStamp = card.querySelector('.card-stamp.nope');
 
@@ -465,15 +443,15 @@
         window.removeEventListener('pointercancel', onPointerUp);
 
         const deltaX = this.currentX - this.startX;
-        const threshold = 90;
+        const threshold = 85;
 
         if (deltaX > threshold) {
           this.swipeOut(card, item, 'right');
         } else if (deltaX < -threshold) {
           this.swipeOut(card, item, 'left');
         } else {
-          // Snap back
-          card.style.transition = 'transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+          // Elastic snap-back
+          card.style.transition = 'transform 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
           card.style.transform = '';
           const likeStamp = card.querySelector('.card-stamp.like');
           const nopeStamp = card.querySelector('.card-stamp.nope');
@@ -488,10 +466,10 @@
     swipeOut(card, item, direction) {
       AudioEngine.play(direction === 'right' ? 'heart' : 'swipe');
 
-      const flyX = direction === 'right' ? window.innerWidth + 200 : -window.innerWidth - 200;
+      const flyX = direction === 'right' ? window.innerWidth + 220 : -window.innerWidth - 220;
       const flyRot = direction === 'right' ? 35 : -35;
 
-      card.style.transition = 'transform 0.4s ease-out, opacity 0.3s ease';
+      card.style.transition = 'transform 0.38s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.3s ease';
       card.style.transform = `translate(${flyX}px, 60px) rotate(${flyRot}deg)`;
       card.style.opacity = '0';
 
@@ -507,7 +485,7 @@
       setTimeout(() => {
         card.remove();
         this.render();
-      }, 350);
+      }, 340);
     },
 
     addToFavorites(item) {
@@ -528,7 +506,6 @@
     },
 
     shuffle() {
-      // Fisher-Yates shuffle
       const remaining = state.activeDeck.slice(state.deckIndex);
       for (let i = remaining.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -561,7 +538,6 @@
         this.render();
       });
 
-      // Deck Size pills
       const sizePills = document.querySelectorAll('#deck-size-pills .pill-opt');
       sizePills.forEach(pill => {
         pill.addEventListener('click', () => {
@@ -573,7 +549,6 @@
         });
       });
 
-      // Category filter chips
       const catChips = document.querySelectorAll('#category-filter-chips .cat-chip');
       catChips.forEach(chip => {
         chip.addEventListener('click', () => {
@@ -585,7 +560,6 @@
         });
       });
 
-      // Keyboard arrow shortcuts
       window.addEventListener('keydown', (e) => {
         if (state.currentTab !== 'tab-deck') return;
         if (e.key === 'ArrowRight' || e.key === 'l') {
@@ -599,7 +573,7 @@
     }
   };
 
-  // --- Feature 3: Love Coupons (Scratch-Off & Digital Tickets) ---
+  // --- Feature 3: Love Coupons (Ogrebi Kupon) ---
   const CouponsEngine = {
     containerEl: document.getElementById('coupons-container'),
     statsEl: document.getElementById('coupons-stats'),
@@ -629,7 +603,7 @@
       LOVE_COUPONS.forEach(c => {
         if (state.couponsState[c.id]?.claimed) claimedCount++;
       });
-      this.statsEl.textContent = `${claimedCount} / ${LOVE_COUPONS.length} Redeemed`;
+      this.statsEl.textContent = `${claimedCount} / ${LOVE_COUPONS.length} Iskorišteno`;
 
       const filtered = LOVE_COUPONS.filter(c => {
         const isClaimed = state.couponsState[c.id]?.claimed;
@@ -653,7 +627,7 @@
       ticket.innerHTML = `
         <div class="coupon-top">
           <span class="coupon-badge-tag">${coupon.badge}</span>
-          <span class="coupon-ticket-id">PASS #${coupon.id.toUpperCase()}</span>
+          <span class="coupon-ticket-id">KUPON #${coupon.id.toUpperCase()}</span>
         </div>
 
         <div class="coupon-body">
@@ -665,11 +639,10 @@
             </div>
           </div>
 
-          <!-- Scratch Canvas (Only if not already revealed) -->
           ${!cState.scratched ? `
             <div class="scratch-overlay-wrap" id="scratch-wrap-${coupon.id}">
               <canvas class="scratch-canvas" id="canvas-${coupon.id}"></canvas>
-              <div class="scratch-hint">✨ Scratch to Reveal ✨</div>
+              <div class="scratch-hint">✨ Ogrebi Prstom ✨</div>
             </div>
           ` : ''}
         </div>
@@ -677,36 +650,33 @@
         <div class="coupon-footer">
           <div>
             ${!cState.scratched ? `
-              <button class="reveal-fallback-btn" data-reveal="${coupon.id}">Tap to reveal</button>
+              <button class="reveal-fallback-btn" data-reveal="${coupon.id}">Otkrij klikom</button>
             ` : ''}
           </div>
 
           <div>
             ${cState.claimed ? `
               <div class="claimed-stamp">
-                <span>✔️</span> Claimed ${cState.claimedAt || ''}
+                <span>✔️</span> Iskorišteno ${cState.claimedAt || ''}
               </div>
             ` : `
               <button class="claim-btn" data-claim="${coupon.id}">
-                <span>🎟️</span> Redeem Coupon
+                <span>🎟️</span> Iskoristi Kupon
               </button>
             `}
           </div>
         </div>
       `;
 
-      // Set up scratch canvas if unrevealed
       if (!cState.scratched) {
         setTimeout(() => this.setupScratchCanvas(coupon.id), 50);
       }
 
-      // Bind claim button
       const claimBtn = ticket.querySelector(`[data-claim="${coupon.id}"]`);
       if (claimBtn) {
         claimBtn.addEventListener('click', () => this.claimCoupon(coupon.id, claimBtn));
       }
 
-      // Bind fallback reveal button
       const revealBtn = ticket.querySelector(`[data-reveal="${coupon.id}"]`);
       if (revealBtn) {
         revealBtn.addEventListener('click', () => this.revealCoupon(coupon.id));
@@ -727,7 +697,6 @@
       canvas.height = height;
 
       const ctx = canvas.getContext('2d');
-      // Create glamorous metallic gold/rose foil gradient
       const grad = ctx.createLinearGradient(0, 0, width, height);
       grad.addColorStop(0, '#d97706');
       grad.addColorStop(0.3, '#f59e0b');
@@ -737,8 +706,7 @@
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
 
-      // Add cute decorative patterns
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.22)';
       for (let i = 0; i < 24; i++) {
         const x = (i * 35) % width;
         const y = Math.floor((i * 35) / width) * 30 + 15;
@@ -746,10 +714,10 @@
         ctx.fillText('💖', x, y);
       }
 
-      ctx.font = 'bold 15px -apple-system, sans-serif';
+      ctx.font = 'bold 14px -apple-system, sans-serif';
       ctx.fillStyle = '#ffffff';
       ctx.textAlign = 'center';
-      ctx.fillText('✨ SCRATCH WITH FINGER ✨', width / 2, height / 2 + 5);
+      ctx.fillText('✨ OGREBI PRSTOM ✨', width / 2, height / 2 + 5);
 
       let isScratching = false;
 
@@ -776,16 +744,14 @@
           let transparentPixels = 0;
           const totalPixels = imgData.data.length / 4;
 
-          for (let i = 3; i < imgData.data.length; i += 16) { // sampled check
+          for (let i = 3; i < imgData.data.length; i += 16) {
             if (imgData.data[i] === 0) transparentPixels += 4;
           }
 
           if (transparentPixels / totalPixels > 0.38) {
             this.revealCoupon(couponId);
           }
-        } catch (e) {
-          // Fallback if security/tainted
-        }
+        } catch (e) {}
       };
 
       canvas.addEventListener('pointerdown', (e) => {
@@ -819,25 +785,53 @@
       const wrap = document.getElementById(`scratch-wrap-${couponId}`);
       if (wrap) {
         wrap.style.opacity = '0';
-        setTimeout(() => wrap.remove(), 400);
+        setTimeout(() => wrap.remove(), 350);
       }
 
       AudioEngine.play('heart');
       ParticleEngine.burst();
     },
 
-    claimCoupon(couponId, btn) {
+    claimCoupon(couponId) {
       if (!state.couponsState[couponId]) state.couponsState[couponId] = {};
       state.couponsState[couponId].scratched = true;
       state.couponsState[couponId].claimed = true;
 
-      const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      const today = new Date().toLocaleDateString('bs-BA', { month: 'short', day: 'numeric' });
       state.couponsState[couponId].claimedAt = today;
       savePersistedState();
 
       AudioEngine.play('claim');
       ParticleEngine.burst();
       this.render();
+    }
+  };
+
+  // --- Photo Lightbox Modal ---
+  const PhotoLightbox = {
+    modalEl: document.getElementById('modal-photo'),
+
+    init() {
+      const openBtn1 = document.getElementById('btn-open-photo');
+      const openBtn2 = document.getElementById('btn-hero-photo');
+      const closeBtn = document.getElementById('btn-close-photo');
+
+      if (openBtn1) openBtn1.addEventListener('click', () => this.open());
+      if (openBtn2) openBtn2.addEventListener('click', () => this.open());
+      if (closeBtn) closeBtn.addEventListener('click', () => this.close());
+      if (this.modalEl) {
+        this.modalEl.addEventListener('click', (e) => {
+          if (e.target === this.modalEl) this.close();
+        });
+      }
+    },
+
+    open() {
+      if (this.modalEl) this.modalEl.classList.add('active');
+    },
+
+    close() {
+      if (this.modalEl) this.modalEl.classList.remove('active');
     }
   };
 
@@ -869,8 +863,8 @@
         this.listEl.innerHTML = `
           <div style="text-align: center; padding: 40px 10px; color: var(--text-muted);">
             <div style="font-size: 38px; margin-bottom: 8px;">💌</div>
-            <p style="font-size: 14px;">No favorited cards yet.</p>
-            <p style="font-size: 12px; margin-top: 4px;">Swipe cards to the right or tap the heart to save your favorite reasons here!</p>
+            <p style="font-size: 14px;">Još nema sačuvanih kartica.</p>
+            <p style="font-size: 12px; margin-top: 4px;">Povuci kartice udesno ili klikni na srce da sačuvaš najdraže poruke ovdje!</p>
           </div>
         `;
         return;
@@ -882,10 +876,10 @@
         item.innerHTML = `
           <div class="favorite-item-top">
             <span class="fav-title">${fav.title}</span>
-            <button class="fav-remove-btn" data-remove="${fav.id}" title="Remove">&times;</button>
+            <button class="fav-remove-btn" data-remove="${fav.id}" title="Ukloni">&times;</button>
           </div>
           <p class="fav-text">"${fav.text}"</p>
-          ${fav.note ? `<p style="font-size: 11px; color: #9f1239; margin-top: 6px;">💭 ${fav.note}</p>` : ''}
+          ${fav.note ? `<p style="font-size: 11px; color: #fda4af; margin-top: 6px;">💭 ${fav.note}</p>` : ''}
         `;
 
         item.querySelector(`[data-remove="${fav.id}"]`).addEventListener('click', () => {
@@ -918,7 +912,7 @@
       });
 
       document.getElementById('btn-reset-data').addEventListener('click', () => {
-        if (confirm('Are you sure you want to reset your deck progress and claimed coupons?')) {
+        if (confirm('Da li si sigurna da želiš resetovati pregledane kartice i kupone?')) {
           localStorage.clear();
           location.reload();
         }
@@ -926,10 +920,9 @@
     },
 
     open() {
-      document.getElementById('input-partner-name').value = state.settings.partnerName;
-      document.getElementById('input-your-name').value = state.settings.yourName;
-      // Convert date string for datetime-local input
-      const dateObj = new Date(state.settings.anniversaryDate);
+      document.getElementById('input-partner-name').value = state.settings.partnerName || 'Amila';
+      document.getElementById('input-your-name').value = state.settings.yourName || 'Muhammed';
+      const dateObj = new Date(state.settings.anniversaryDate || '2026-06-16T00:00:00');
       if (!isNaN(dateObj.getTime())) {
         const iso = new Date(dateObj.getTime() - dateObj.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
         document.getElementById('input-anniversary-date').value = iso;
@@ -943,14 +936,13 @@
     },
 
     save() {
-      state.settings.partnerName = document.getElementById('input-partner-name').value.trim() || 'My Love';
-      state.settings.yourName = document.getElementById('input-your-name').value.trim() || 'Your Soulmate';
+      state.settings.partnerName = document.getElementById('input-partner-name').value.trim() || 'Amila';
+      state.settings.yourName = document.getElementById('input-your-name').value.trim() || 'Muhammed';
       const dateVal = document.getElementById('input-anniversary-date').value;
       if (dateVal) state.settings.anniversaryDate = new Date(dateVal).toISOString();
       state.settings.soundEnabled = document.getElementById('input-sound-toggle').checked;
 
       savePersistedState();
-      App.applyPersonalization();
       UsCounter.updateDisplay();
       this.close();
       ParticleEngine.burst();
@@ -962,29 +954,18 @@
     init() {
       loadPersistedState();
       ParticleEngine.init();
-      this.applyPersonalization();
       this.updateFavoritesBadge();
 
-      // Navigation tabs
       this.bindNavigation();
 
-      // Start modules
       UsCounter.start();
       DeckEngine.init();
       CouponsEngine.init();
       FavoritesVault.init();
+      PhotoLightbox.init();
       SettingsManager.init();
 
-      // Register PWA service worker
       this.registerServiceWorker();
-    },
-
-    applyPersonalization() {
-      const headerTitle = document.getElementById('header-partner-title');
-      const coupleTitle = document.getElementById('couple-names-display');
-
-      if (headerTitle) headerTitle.textContent = `For ${state.settings.partnerName}`;
-      if (coupleTitle) coupleTitle.textContent = `${state.settings.yourName} & ${state.settings.partnerName}`;
     },
 
     updateFavoritesBadge() {
@@ -1001,7 +982,6 @@
         });
       });
 
-      // Quick prompt buttons on Home tab
       const goDeck = document.getElementById('quick-go-deck');
       if (goDeck) goDeck.addEventListener('click', () => this.switchTab('tab-deck'));
 
@@ -1012,12 +992,10 @@
     switchTab(tabId) {
       state.currentTab = tabId;
 
-      // Update nav buttons
       document.querySelectorAll('.nav-tab-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.tab === tabId);
       });
 
-      // Update tab panes
       document.querySelectorAll('.tab-pane').forEach(pane => {
         pane.classList.toggle('active', pane.id === tabId);
       });
@@ -1042,6 +1020,5 @@
     }
   };
 
-  // Launch when DOM is ready
   document.addEventListener('DOMContentLoaded', () => App.init());
 })();

@@ -1,11 +1,11 @@
 {
-  "name": "Reasons I Love You • Forever Us",
-  "short_name": "Forever Us",
-  "description": "A romantic love card deck, us timer counter, and scratch-off love coupons for your soulmate.",
+  "name": "Love1606 • Amila & Muhammed",
+  "short_name": "Love1606",
+  "description": "Love1606 • Amila & Muhammed. Naš ljubavni brojač, špil razloga zašto te volim i ljubavni kuponi.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#fff1f2",
-  "theme_color": "#fff1f2",
+  "background_color": "#0d0914",
+  "theme_color": "#0d0914",
   "orientation": "portrait",
   "icons": [
     {

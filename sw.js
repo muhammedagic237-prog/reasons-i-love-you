@@ -1,5 +1,5 @@
-// Forever Us PWA Service Worker
-const CACHE_NAME = 'forever-us-v1';
+// Love1606 • Service Worker
+const CACHE_NAME = 'love1606-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -7,7 +7,8 @@ const ASSETS_TO_CACHE = [
   './data.js',
   './app.js',
   './manifest.json',
-  './icon.svg'
+  './icon.svg',
+  './bg.jpg'
 ];
 
 self.addEventListener('install', (event) => {
@@ -29,14 +30,12 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Cache first, fallback to network
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {
         return cachedResponse;
       }
       return fetch(event.request).then((networkResponse) => {
-        // Cache valid GET responses
         if (event.request.method === 'GET' && networkResponse && networkResponse.status === 200) {
           const responseToCache = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
@@ -45,9 +44,6 @@ self.addEventListener('fetch', (event) => {
         }
         return networkResponse;
       });
-    }).catch(() => {
-      // Offline fallback
-      return caches.match('./index.html');
-    })
+    }).catch(() => caches.match('./index.html'))
   );
 });
