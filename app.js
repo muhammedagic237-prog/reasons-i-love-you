@@ -274,7 +274,7 @@
       const minutes = totalMinutes % 60;
       const totalHours = Math.floor(totalMinutes / 60);
       const hours = totalHours % 24;
-      const totalDays = Math.floor(totalHours / 24);
+      const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
 
       const pad = (n) => String(Math.max(0, n)).padStart(2, '0');
 
@@ -289,18 +289,6 @@
       if (elHours) elHours.textContent = pad(hours);
       if (elMinutes) elMinutes.textContent = pad(minutes);
       if (elSeconds) elSeconds.textContent = pad(seconds);
-
-      // Milestones (100, 150, 200, 365, 500, 730, 1000...)
-      const milestones = [100, 150, 200, 300, 365, 500, 730, 1000, 1500, 2000];
-      const nextMilestone = milestones.find(m => m > totalDays) || (totalDays + 50);
-      const daysToNext = nextMilestone - totalDays;
-
-      const titleEl = document.getElementById('milestone-title');
-      const descEl = document.getElementById('milestone-desc');
-      if (titleEl && descEl) {
-        titleEl.textContent = `${nextMilestone} Dana Naše Ljubavi`;
-        descEl.textContent = `Još ${daysToNext} dan${daysToNext === 1 ? '' : 'a'} do našeg jubilarnog trenutka (${totalDays} predivnih dana iza nas)!`;
-      }
     }
   };
 
@@ -343,12 +331,12 @@
 
       if (remaining.length === 0) {
         this.emptyEl.classList.add('active');
-        this.counterEl.textContent = `Završeno (${state.activeDeck.length}/${state.activeDeck.length})`;
+        this.counterEl.textContent = `Sve Poruke Pročitane ❤️`;
         return;
       }
 
       this.emptyEl.classList.remove('active');
-      this.counterEl.textContent = `Kartica ${state.deckIndex + 1} od ${state.activeDeck.length}`;
+      this.counterEl.textContent = `✨ Poruka Za Tebe ✨`;
 
       const cardsToRender = remaining.slice(0, 3);
       cardsToRender.reverse().forEach((item, index) => {
@@ -536,17 +524,6 @@
         state.undoStack = [];
         savePersistedState();
         this.render();
-      });
-
-      const sizePills = document.querySelectorAll('#deck-size-pills .pill-opt');
-      sizePills.forEach(pill => {
-        pill.addEventListener('click', () => {
-          sizePills.forEach(p => p.classList.remove('active'));
-          pill.classList.add('active');
-          state.currentDeckSize = parseInt(pill.dataset.size, 10);
-          state.deckIndex = 0;
-          this.filterDeck();
-        });
       });
 
       const catChips = document.querySelectorAll('#category-filter-chips .cat-chip');
