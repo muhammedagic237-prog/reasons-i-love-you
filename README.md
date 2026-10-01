@@ -51,29 +51,19 @@ You can also add or tweak reasons in the `REASONS_DATABASE` array or add custom 
 
 ---
 
-## 🌐 Deploy to GitHub and Vercel (Free in 2 Minutes)
+## 🌐 GitHub Repository & Live URLs
 
-### Step 1: Initialize Git and Push to GitHub
-In this folder:
-```bash
-git init
-git add .
-git commit -m "Initial commit of Forever Us PWA"
-git branch -M main
-```
-Then create a new repository on [GitHub](https://github.com/new) (e.g. `reasons-i-love-you`), and push:
-```bash
-git remote add origin https://github.com/YOUR_USERNAME/reasons-i-love-you.git
-git push -u origin main
-```
+- **GitHub Repository**: [https://github.com/muhammedagic237-prog/reasons-i-love-you](https://github.com/muhammedagic237-prog/reasons-i-love-you)
+- **Live Hosted App**: [https://muhammedagic237-prog.github.io/reasons-i-love-you/](https://muhammedagic237-prog.github.io/reasons-i-love-you/)
 
-### Step 2: Deploy to Vercel (1-Click)
-1. Go to [Vercel.com](https://vercel.com) and log in with your GitHub account.
-2. Click **Add New...** -> **Project**.
-3. Select your `reasons-i-love-you` GitHub repository.
-4. Keep the Framework Preset as **Other** (it's static vanilla HTML/JS, zero build configuration needed).
-5. Click **Deploy**!
-6. In ~15 seconds, Vercel will give you a live production URL (e.g., `https://forever-us-alpha.vercel.app`) that you can send directly to her!
+---
+
+## 🚀 1-Click Deploy to Vercel (Optional)
+The repository is already on GitHub! To deploy to Vercel:
+1. Go to [vercel.com/new](https://vercel.com/new) and log in with your GitHub account.
+2. Click **Import** next to `reasons-i-love-you`.
+3. Keep the Framework Preset as **Other** &rarr; Click **Deploy**!
+4. You will get a live Vercel URL (e.g. `https://forever-us-alpha.vercel.app`).
 
 ---
 
